@@ -3,11 +3,11 @@ import { generate } from 'openapi-typescript-validator';
 import { GenerateOptions } from 'openapi-typescript-validator/dist/GenerateOptions';
 import fs from 'fs';
 
-// const prettier = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../.prettierrc'), 'utf-8'));
-//   const prettierOptions = {
-//     parser: 'typescript',
-//     ...prettier,
-//   };
+const prettier = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../.prettierrc'), 'utf-8'));
+const prettierOptions = {
+    parser: 'typescript',
+    ...prettier,
+};
 
 const baseOptions: Omit<GenerateOptions, 'schemaFile' | 'directory'> = {
     skipSchemaFile: true,
@@ -16,7 +16,7 @@ const baseOptions: Omit<GenerateOptions, 'schemaFile' | 'directory'> = {
         mergeDecoders: false,
         validatorOutput: 'commonjs',
     },
-    // prettierOptions,
+    prettierOptions,
     schemaType: 'custom',
 };
 
@@ -26,7 +26,7 @@ generate({
     directory: path.join(__dirname, '../api/generated'),
     skipSchemaFile: false,
     skipMetaFile: false,
-}).catch(error => {
+}).catch((error) => {
     console.error(error);
     process.exit(1);
 });
