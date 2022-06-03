@@ -1,7 +1,7 @@
-import { Post } from '../generated/models';
+// import { Post } from 'sdui';
 
-function post(object: Post): Post {
-    return object;
-}
+// function post(object: Post): Post {
+//     return object;
+// }
 
-export { post };
+// export { post };

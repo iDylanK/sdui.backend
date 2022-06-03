@@ -1,0 +1,27 @@
+{
+  "name": "sdui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.ts",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.18.0",
+    "@typescript-eslint/parser": "^5.18.0",
+    "eslint": "^8.12.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-airbnb-base": "0.0.1-security",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.6.2",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.3"
+  },
+  "dependencies": {
+    "openapi-typescript-validator": "^3.2.0"
+  },
+  "scripts": {
+    "build": "ts-node schemas/index.ts",
+    "build:project": "ts-node ../../schemas/index.ts"
+  },
+  "author": "",
+  "license": "ISC"
+}

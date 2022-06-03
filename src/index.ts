@@ -1,7 +1,11 @@
 import http from 'http';
 import express, { Express } from 'express';
 // import morgan from 'morgan';
-import routes from './routes/posts';
+// import postRoutes from './routes/posts';
+import homeRoutes from './routes/home';
+// import reactRoutes from './routes/react';
+// import jsonRoutes from './routes/json';
+// import productRoutes from './routes/product';
 
 const router: Express = express();
 
@@ -29,7 +33,11 @@ router.use((req, res, next) => {
 });
 
 /** Routes */
-router.use('/', routes);
+// router.use('/', postRoutes);
+router.use('/', homeRoutes);
+// router.use('/', reactRoutes);
+// router.use('/', jsonRoutes);
+// router.use('/', productRoutes);
 
 /** Error handling */
 router.use((req, res, next) => {
