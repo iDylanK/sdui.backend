@@ -1,22 +1,24 @@
+// TODO
+
+// .......
+// ATTEMPT.....
 // import path from 'path';
 // import {generateProject} from '../packages/sdui/lib'
 
 // generateProject(path.join(__dirname, '/component.js'), path.join(__dirname, '../generated'));
 
-const component = require('./component');
+// .......
+// ATTEMPT.....
+// const component = require('./component');
+// module.exports.types = component.types;
 
-module.exports.types = component.types;
-
-
-
-
+// .......
+// CURRENT ATTEMPT.....
 import path from 'path';
-import { generate } from '../packages/openapi-typescript-validator';
-import { GenerateOptions } from '../packages/openapi-typescript-validator/dist/GenerateOptions';
+import { generate } from 'openapi-typescript-validator';
+import { GenerateOptions } from 'openapi-typescript-validator/dist/GenerateOptions';
 import fs from 'fs';
 
-
-console.log("test");
 
 const prettier = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../.prettierrc'), 'utf-8'));
 const prettierOptions = {

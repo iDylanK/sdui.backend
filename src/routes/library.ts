@@ -1,9 +1,9 @@
 /** source/routes/posts.ts */
 import express from 'express';
-import controller from '../controllers/json';
+import controller from '../controllers/library';
 
 const router = express.Router();
 
-router.get('/clean', controller.cleanSDUI);
+router.get('/library', controller.getLibraryScreen);
 
 export = router;

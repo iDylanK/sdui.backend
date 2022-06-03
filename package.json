@@ -2,7 +2,6 @@
   "name": "sdui.sample",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
   "devDependencies": {
     "@aws-sdk/client-dynamodb": "^3.85.0",
     "@types/express": "^4.17.13",
@@ -28,10 +27,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently \"nodemon --watch src src/index.ts -e ts,tsx \" \"npm run build:schemas:watch\" -c bgGreen,bgBlue -k",
-    "build": "rm -rf build/  && tsc",
-    "build:project:schemas": "ts-node schemas/index.ts",
-    "build:schemas": "cd packages/sdui && npm run build",
-    "build:schemas:watch": "nodemon --watch \"packages/sdui/schemas/**\" --ext \"js\" --exec \"npm run build:schemas\""
+    "build:schemas": "ts-node schemas/index.ts",
+    "build:sdui:schemas": "cd packages/sdui && npm run build",
+    "build:schemas:watch": "nodemon --watch \"packages/sdui/schemas/**\" --ext \"js\" --exec \"npm run build:sdui:schemas\""
   },
   "workspaces": [
     "packages/sdui"

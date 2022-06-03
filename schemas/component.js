@@ -12,7 +12,7 @@ const {
     number,
     compose,
     enumerate,
-} = require('../packages/openapi-typescript-validator');
+} = require('openapi-typescript-validator');
 
 const types = {};
 
