@@ -6,21 +6,15 @@ const {
     ref,
     enumerate,
     nillable,
-    any,
-    optional,
     string,
     boolean,
-    anyOf,
-    oneOf,
-    constant,
-    number
 } = require('openapi-typescript-validator');
 
-// const component = require('./component');
+const component = require('./component');
 const action = require('./action');
-// const post = require('./post');
+const header = require('./header');
 
-let types = {};
+const types = {};
 
 types.Color = enumerate([
     'RED',
@@ -53,11 +47,6 @@ types.DisplayMode = enumerate([
     'LARGE',
 ]);
 
-types.Header = object({
-    id: string(),
-    scrollable: boolean(),
-});
-
 types.Section = object({
     title: nillable(string()),
     components: nillable(array(ref('Component'))),
@@ -69,35 +58,12 @@ types.View = object({
     refreshable: boolean(),
 });
 
-types.Component = object({
-    id: string(),
-    action: optional(ref('Action')),
-    // content: nillable(any()),
-    // test: optional(number()),
-});
-
-// const component = require('../../../schemas');
-
-// require('fs').readdirSync('../../schemas').forEach((file) => {
-//     console.log(file)
-//     if (file.split('.').pop() === 'js') {
-//         // eslint-disable-next-line global-require
-//         // eslint-disable-next-line import/no-dynamic-require
-//         const fileTypes = require(`../../../schemas/${file}`).types;
-//         types = { ...types, fileTypes }
-//     }
-// });
-
-// types.Component = object({
-//     id: string(),
-// });
-
 module.exports = {
     types: {
         ...types,
-        // ...component.types,
+        ...component.types,
         ...action.types,
-        // ...post.types,
+        ...header.types,
     },
     decoders: [
         'ErrorResponse',

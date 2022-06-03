@@ -40,7 +40,7 @@ const baseOptions: Omit<GenerateOptions, 'schemaFile' | 'directory'> = {
 generate({
     ...baseOptions,
     schemaFile: path.join(__dirname, 'component.js'),
-    directory: path.join(__dirname, 'generated'),
+    directory: path.join(__dirname, '../generated'),
     skipSchemaFile: false,
     skipMetaFile: false,
 }).catch((error) => {

@@ -1,4 +1,4 @@
-import { View } from 'sdui';
+import { View } from '../../generated/models';
 
 function view(object: View): View {
     return object;

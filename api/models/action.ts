@@ -1,4 +1,4 @@
-import { Action } from 'sdui';
+import { Action } from '../../generated/models';
 
 function action(object: Action): Action {
     return object;
