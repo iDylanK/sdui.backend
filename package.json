@@ -22,18 +22,15 @@
     "express": "^4.18.1",
     "nodemon": "^2.0.16",
     "react": "^18.1.0",
-    "openapi-typescript-validator": "^3.2.0"
+    "sdui": "file:packages/sdui"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently \"nodemon --watch src src/index.ts -e ts,tsx \" \"npm run build:schemas:watch\" -c bgGreen,bgBlue -k",
-    "build:schemas": "ts-node schemas/index.ts",
-    "build:sdui:schemas": "cd packages/sdui && npm run build",
-    "build:schemas:watch": "nodemon --watch \"packages/sdui/schemas/**\" --ext \"js\" --exec \"npm run build:sdui:schemas\""
+    "generate:schema:watch": "nodemon --watch \"packages/sdui/schemas/**\" --ext \"js\" --exec \"npm run generate:schema:project\"",
+    "generate:schema:project": "sdui schema ./schemas/project.js ./generated",
+    "generate:swift:project": "sdui swift ./generated/schema.json ~/Documents/sdui/sduiSample/Shared/Domain/ApiModels2.swift"
   },
-  "workspaces": [
-    "packages/sdui"
-  ],
   "author": "",
   "license": "ISC"
 }

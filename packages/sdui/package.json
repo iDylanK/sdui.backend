@@ -2,7 +2,7 @@
   "name": "sdui",
   "version": "1.0.0",
   "description": "",
-  "main": "lib/index.ts",
+  "main": "dist/index.js",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.18.0",
     "@typescript-eslint/parser": "^5.18.0",
@@ -12,15 +12,22 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "^2.6.2",
-    "ts-node": "^10.7.0",
     "typescript": "^4.6.3"
   },
   "dependencies": {
-    "openapi-typescript-validator": "^3.2.0"
+    "openapi-typescript-validator": "^3.2.0",
+    "ts-node": "^10.7.0",
+    "quicktype": "^15.0.261",
+    "commander": "^9.3.0"
   },
   "scripts": {
-    "build": "ts-node schemas/index.ts",
-    "build:project": "ts-node ../../schemas/index.ts"
+    "build": "tsc",
+    "generate:schema:library": "ts-node lib/library",
+    "generate:swift:library": "quicktype -s schema generated/schema.json -o $npm_config_sdui_dir/Sources/SDUI/Domain/SDUIModels.swift --coding-keys --no-initializers --type-prefix SDUI --access-level public --density normal --protocol hashable --acronym-style camel -t Schema --struct-or-class struct --swift-5-support",
+    "postgenerate:swift:library": "ts-node swift/optimize-library.ts $npm_config_sdui_dir/Sources/SDUI/Domain/SDUIModels.swift"
+  },
+  "bin": {
+    "sdui-schema": "dist/index.js"
   },
   "author": "",
   "license": "ISC"
