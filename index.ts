@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { spawn, SpawnOptions } from 'child_process';
+import { spawnSync, SpawnOptions } from 'child_process';
 import path = require('path');
 import { program } from 'commander';
 
@@ -18,7 +18,7 @@ function main() {
         .command('schema <source> <destination>')
         .description('Create a json project schema file.')
         .action((source: string, destination: string) => {
-            spawn('node', [
+            spawnSync('node', [
                 path.join(__dirname, 'lib/project.js'),
                 path.resolve(process.cwd(), source),
                 path.resolve(process.cwd(), destination),
@@ -30,7 +30,7 @@ function main() {
         .description('Create a swift class file.')
         .action((source: string, destination: string) => {
             console.log('Swift creator.');
-            spawn('quicktype', [
+            spawnSync('quicktype', [
                 '-s', 'schema', path.resolve(process.cwd(), source),
                 '-o', path.resolve(process.cwd(), destination),
                 '--coding-keys',
@@ -44,7 +44,7 @@ function main() {
                 '--struct-or-class', 'struct',
                 '--swift-5-support',
             ], spawnOptions);
-            spawn('node', [path.join(__dirname, 'swift/optimize-project.js'), destination], spawnOptions);
+            spawnSync('node', [path.join(__dirname, 'swift/optimize-project.js'), path.resolve(process.cwd(), destination), path.resolve(process.cwd(), source)], spawnOptions);
         });
 
     program.parse();

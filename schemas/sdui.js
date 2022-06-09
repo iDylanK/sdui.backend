@@ -8,6 +8,7 @@ const {
     nillable,
     string,
     boolean,
+    optional,
 } = require('openapi-typescript-validator');
 
 const component = require('./component');
@@ -49,7 +50,7 @@ types.DisplayMode = enumerate([
 
 types.Section = object({
     title: nillable(string()),
-    components: nillable(array(ref('Component'))),
+    components: optional(array(ref('Component'))),
 });
 
 types.View = object({

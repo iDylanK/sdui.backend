@@ -20,7 +20,7 @@
     "dev": "concurrently \"nodemon --watch src src/index.ts -e ts,tsx \" \"npm run schema:watch\" -c bgGreen,bgBlue -k",
     "schema:watch": "nodemon --watch \"schemas/**\" --ext \"js\" --exec \"npm run schema\"",
     "schema": "sdui schema ./schemas/project.js ./generated",
-    "swift": "sdui swift ./generated/schema.json ~/Documents/sdui/sduiSample/Shared/Domain/ApiModels2.swift"
+    "swift": "npm run schema && sdui swift ./generated/schema.json ~/Documents/sdui/sduiSample/Shared/Domain/ApiModels.swift"
   },
   "author": "",
   "license": "ISC"

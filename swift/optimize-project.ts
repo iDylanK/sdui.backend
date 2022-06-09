@@ -1,73 +1,78 @@
-const fs = require('fs');
-const path = process.argv[2];
+import { readFileSync, writeFileSync } from 'fs';
+import { rootFile } from '../lib/utils';
 
-var fileContents = fs.readFileSync(path, 'utf-8');
+const modelsFilePath = process.argv[2];
+const schema = process.argv[3];
 
-// we filter out any genereted combined structs which are a result of the anyOf types being merged to 1 struct
+let fileContents = readFileSync(modelsFilePath, 'utf-8');
+
+// We filter out any genereted combined structs which are a result of the anyOf
+// types being merged to 1 struct
 fileContents = fileContents.replace(/^public struct \w+Class:.*?(?=^public)/gms, '\n\n');
 
-// we remove the ApiSchema struct
-fileContents = fileContents.replace(/^public struct SDUISchema:.*?(?=^public)/gms, '\n\n');
+fileContents = fileContents.replace(/^import Foundation/gms, 'import Foundation\nimport SDUI\n');
 
-// we remove the comments which are useless
-//fileContents = fileContents.replace(/^\/\/.*/gm, '');
+// We remove the comments which are useless
+// fileContents = fileContents.replace(/^\/\/.*/gm, '');
 
-// we don't want to parse enums directly, because when a value gets added, we don't want the whole object to fail. we want to fallback to a sane default
-//const enumMatches = [...fileContents.matchAll(/^public\senum\s(\w+)/gm)]
-//// ignore these enums (before SDUI) the API response will fail to parse
-//const ignoredEnums = ['ApiSex', 'ApiVoucherType', 'ApiContentListStyle', 'ApiContentListType', 'ApiBannerType']
-//
-//enumMatches.forEach(match => {
-//  const enumName = match[1];
-//
-//  if (ignoredEnums.includes(enumName)) {
-//    return
-//  }
-//
-//  const newEnumName = `ApiEnum<${enumName}>`
-//  const regex = new RegExp(`(:\\s)(${enumName})(\\b)`, 'gm');
-//  fileContents = fileContents.replace(regex, `$1${newEnumName}$3`);
-//
-//  console.info(`Replacing ${enumName} with ${newEnumName}`)
-//})
+let libraryTypes = Object.keys(JSON.parse(readFileSync(rootFile('generated/schema.json'), 'utf-8')).definitions);
+libraryTypes = libraryTypes.map((x) => `SDUI${x}`);
 
 // Note: all anyOf models should be filtered by hand and be manually created
 const modelsToFilters = [
-  'SDUIComponent',
-  'SDUIHeader',
-]
+    'SDUISchema',
+    'SDUIComponent',
+    'SDUIHeader',
+    'SDUIComponentBase',
+    'SDUIHeaderBase',
+    ...libraryTypes,
+];
 
 // remove certain models
-modelsToFilters.forEach(model => {
-  console.info(`Removing ${model} from generated models`);
-  const regex = new RegExp(`^public (struct|class|enum) ${model}\:.*?(?=^public)`, 'gms');
-  fileContents = fileContents.replace(regex, '\n\n');
+modelsToFilters.forEach((model) => {
+    console.info(`Removing ${model} from generated models`);
+    const regex = new RegExp(`^public (struct|class|enum) ${model}:.*?(?=^public)`, 'gms');
+    fileContents = fileContents.replace(regex, '\n');
+
+    // TODO: does not remove the last one....
+    // TODO: should not remove ComponentType..
+    // const regexType =
+    //      new RegExp(`^public (struct|class|enum) ${model}Type:.*?(?=^public)`, 'gms');
+    // fileContents = fileContents.replace(regexType, '\n');
 });
 
+// TODO: move to own File
+let componentTypes = JSON.parse(readFileSync(schema, 'utf-8')).definitions.Component.anyOf.map((component: any) => component.$ref.replace('#/definitions/', ''));
 
+componentTypes = componentTypes.map((component: any) => {
+    const c = component.replace('Component', '');
+    return [
+        component, c.charAt(0).toLowerCase() + c.slice(1),
+    ];
+});
 
-// somehow the generator doesn't refer to the classes below but creates a combined class of all possible types, we replace those
-//fileContents = fileContents.replace(/:\sApiComponentWebshopActionClass/gm, ': ApiAction');
-//fileContents = fileContents.replace(/:\sApiComponentWebshopAction/gm, ": ApiAction");
-//fileContents = fileContents.replace(/:\sApiStandardCommandActionClass/gm, ": ApiAction");
-//fileContents = fileContents.replace(/:\sApiComponentStandardCommandAction/gm, ": ApiAction");
-//fileContents = fileContents.replace(/:\sApiVariationListItemWebshopAction/gm, ': ApiAction');
-//fileContents = fileContents.replace(/:\sApiSectionStandardCommandAction/gm, ': ApiAction');
-//fileContents = fileContents.replace(/:\sApiComponentContentLocalImage/gm, ': ApiImage');
-//fileContents = fileContents.replace(/:\sApiFavoriteListItemImage/gm, ': ApiImage');
-//fileContents = fileContents.replace(/:\sApiTScreen/gm, ': ApiScreen');
-//fileContents = fileContents.replace(/:\sApiNormalButtonClass/gm, ': ApiButton');
-//fileContents = fileContents.replace(/:\sApiSelectionButtonClass/gm, ': ApiButton');
-//fileContents = fileContents.replace(/:\sApiImageElement/gm, ': ApiImage');
-//fileContents = fileContents.replace(/:\s\[ApiImageElement\]/gm, ': [ApiImage]');
-//fileContents = fileContents.replace(/:\s\[ApiVariationListItem\]/gm, ': [ApiComponent]');
-//fileContents = fileContents.replace(/ApiComponentElement/gm, 'ApiComponent');
-//fileContents = fileContents.replace('public class', 'public struct');
-//fileContents = fileContents.replace('public struct SDUISection: Codable, Hashable', 'public class SDUISection: Codable, Hashable, ObservableObject');
-//fileContents = fileContents.replace('public struct SDUIScreen: Codable, Hashable', 'public class SDUIScreen: Codable, Hashable, ObservableObject');
-+
-fs.writeFileSync(path, fileContents, 'utf-8');
+componentTypes = componentTypes.filter((component: [string, string]) => component[1] !== 'example'); // TODO: current example solution. Removing example from the library framework causes the anyOf to brake.
+
+fileContents += '\npublic enum SDUIComponent: Codable, Equatable {\n';
+
+componentTypes.forEach((component: [string, string]) => {
+    fileContents += `    case ${component[1]}(SDUI${component[0]})\n`;
+});
+fileContents += '    case empty(SDUIEmpty)\n\n';
+
+fileContents += '    public init(from decoder: Decoder) throws {\n';
+fileContents += '        let type = try SDUIComponentType(rawValue: decoder.decodeType())\n\n';
+fileContents += '        switch type {\n';
+
+componentTypes.forEach((component: [string, string]) => {
+    fileContents += `        case .${component[1]}: self = try .${component[1]}(decoder.decodeSingleValueContainer())\n`;
+});
+
+fileContents += '        case .none: self = try .empty(decoder.decodeSingleValueContainer())\n';
+fileContents += '        }\n';
+fileContents += '    }\n';
+fileContents += '}\n';
+
+writeFileSync(modelsFilePath, fileContents, 'utf-8');
 
 console.info('Done!');
-
-export {};

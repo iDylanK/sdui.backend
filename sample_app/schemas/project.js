@@ -37,12 +37,11 @@ types.Product = object({
     image: string(),
 });
 
-types.Component = anyOf([
-    'ProductComponent',
-]);
+types.Component = anyOf([...types.Component.anyOf, 'ProductComponent']);
 
-types.Header = anyOf([
-    'ProductHeader',
-]);
+// types.Header = anyOf([
+//     'ProductHeader',
+// ]);
+types.Header = anyOf([...types.Header.anyOf, 'ProductHeader']);
 
 module.exports.types = types;

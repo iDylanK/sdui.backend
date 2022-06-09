@@ -16,7 +16,7 @@ types.ComponentBase = object({
     action: optional(ref('Action')),
 });
 
-types.ComponentExample = compose(
+types.ExampleComponent = compose(
     types.ComponentBase,
     object({
         content: string(),
@@ -24,7 +24,7 @@ types.ComponentExample = compose(
 );
 
 types.Component = anyOf([
-    'ComponentExample',
+    'ExampleComponent',
 ]);
 
 module.exports.types = types;
