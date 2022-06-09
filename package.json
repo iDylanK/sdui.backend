@@ -1,35 +1,34 @@
 {
-  "name": "sdui.sample",
+  "name": "sdui",
   "version": "1.0.0",
   "description": "",
+  "main": "dist/index.js",
   "devDependencies": {
-    "@aws-sdk/client-dynamodb": "^3.85.0",
-    "@types/express": "^4.17.13",
-    "@typescript-eslint/eslint-plugin": "^5.22.0",
-    "@typescript-eslint/parser": "^5.22.0",
-    "concurrently": "^7.1.0",
-    "eslint": "^8.14.0",
+    "@typescript-eslint/eslint-plugin": "^5.18.0",
+    "@typescript-eslint/parser": "^5.18.0",
+    "eslint": "^8.12.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-airbnb-base": "0.0.1-security",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "^2.6.2",
-    "ts-node": "^10.7.0",
-    "typescript": "^4.6.4"
+    "typescript": "^4.6.3"
   },
   "dependencies": {
-    "@types/react": "^18.0.8",
-    "express": "^4.18.1",
-    "nodemon": "^2.0.16",
-    "react": "^18.1.0",
-    "sdui": "file:packages/sdui"
+    "openapi-typescript-validator": "^3.2.0",
+    "ts-node": "^10.7.0",
+    "quicktype": "^15.0.261",
+    "commander": "^9.3.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently \"nodemon --watch src src/index.ts -e ts,tsx \" \"npm run build:schemas:watch\" -c bgGreen,bgBlue -k",
-    "generate:schema:watch": "nodemon --watch \"packages/sdui/schemas/**\" --ext \"js\" --exec \"npm run generate:schema:project\"",
-    "generate:schema:project": "sdui schema ./schemas/project.js ./generated",
-    "generate:swift:project": "sdui swift ./generated/schema.json ~/Documents/sdui/sduiSample/Shared/Domain/ApiModels2.swift"
+    "build": "tsc",
+    "postbuild": "cp .prettierrc dist/.prettierrc",
+    "library:schema": "ts-node lib/library",
+    "library:swift": "quicktype -s schema generated/schema.json -o $npm_config_sdui_dir/Sources/SDUI/Domain/SDUIModels.swift --coding-keys --no-initializers --type-prefix SDUI --access-level public --density normal --protocol hashable --acronym-style camel -t Schema --struct-or-class struct --swift-5-support",
+    "postlibrary:swift": "ts-node swift/optimize-library.ts $npm_config_sdui_dir/Sources/SDUI/Domain/SDUIModels.swift"
+  },
+  "bin": {
+    "sdui": "dist/index.js"
   },
   "author": "",
   "license": "ISC"

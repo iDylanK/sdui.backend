@@ -1,0 +1,27 @@
+{
+  "name": "sdui.sample",
+  "version": "1.0.0",
+  "description": "",
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "concurrently": "^7.1.0",
+    "prettier": "^2.6.2",
+    "typescript": "^4.6.4"
+  },
+  "dependencies": {
+    "@types/react": "^18.0.8",
+    "express": "^4.18.1",
+    "nodemon": "^2.0.16",
+    "react": "^18.1.0",
+    "sdui": "file:.."
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"nodemon --watch src src/index.ts -e ts,tsx \" \"npm run schema:watch\" -c bgGreen,bgBlue -k",
+    "schema:watch": "nodemon --watch \"schemas/**\" --ext \"js\" --exec \"npm run schema\"",
+    "schema": "sdui schema ./schemas/project.js ./generated",
+    "swift": "sdui swift ./generated/schema.json ~/Documents/sdui/sduiSample/Shared/Domain/ApiModels2.swift"
+  },
+  "author": "",
+  "license": "ISC"
+}

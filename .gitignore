@@ -1,5 +1,6 @@
 generated
 experiments
+.npmrc
 
 # Created by https://www.toptal.com/developers/gitignore/api/node,java,macos,linux
 # Edit at https://www.toptal.com/developers/gitignore?templates=node,java,macos,linux

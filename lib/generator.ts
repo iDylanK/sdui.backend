@@ -3,7 +3,11 @@ import { generate } from 'openapi-typescript-validator';
 import { GenerateOptions } from 'openapi-typescript-validator/dist/GenerateOptions';
 import fs from 'fs';
 
-const prettier = JSON.parse(fs.readFileSync(path.resolve('./', '.prettierrc'), 'utf-8'));
+const main = require.main || undefined;
+const mainDir = path.dirname(main ? main.filename : '');
+const prettierPath = path.join(mainDir, '../.prettierrc');
+
+const prettier = JSON.parse(fs.readFileSync(prettierPath, 'utf-8'));
 const prettierOptions = {
     parser: 'typescript',
     ...prettier,

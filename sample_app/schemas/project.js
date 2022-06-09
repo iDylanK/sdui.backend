@@ -14,7 +14,7 @@ const {
  */
 
 // Load SDUI frameowork
-const { types } = require('../packages/sdui/schemas/sdui');
+const { types } = require('../../schemas/sdui');
 
 types.ProductComponent = compose(
     types.ComponentBase,
