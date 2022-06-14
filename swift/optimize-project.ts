@@ -33,7 +33,7 @@ const modelsToFilters = [
 // TODO: Does not remove the last one because of the regex.
 modelsToFilters.forEach((model) => {
     console.info(`Removing ${model} from generated models`);
-    fileContents = filterModel(fileContents, model, model.toLowerCase() !== 'sduicomponent');
+    fileContents = filterModel(fileContents, model, model.toLowerCase() !== 'sduicomponent' && model.toLowerCase() !== 'sduiaction');
 });
 
 fileContents += generateComponent(schema);

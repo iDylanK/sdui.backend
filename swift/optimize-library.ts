@@ -21,6 +21,7 @@ const modelsToFilters = [
     'SDUIHeader',
     'SDUIComponentBase',
     'SDUIHeaderBase',
+    'SDUIAction',
 ];
 
 // remove certain models
