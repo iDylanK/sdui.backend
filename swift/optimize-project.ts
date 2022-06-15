@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { rootFile } from '../lib/utils';
-import { generateComponent } from './component';
+import { generateCodableEnum } from './enum';
 import { filterModel } from './filter';
 
 const modelsFilePath = process.argv[2];
@@ -23,7 +23,6 @@ libraryTypes = libraryTypes.map((x) => `SDUI${x}`);
 // Note: all anyOf models should be filtered by hand and be manually created
 const modelsToFilters = [
     'SDUISchema',
-    'SDUIHeader',
     'SDUIComponentBase',
     'SDUIHeaderBase',
     ...libraryTypes,
@@ -33,10 +32,13 @@ const modelsToFilters = [
 // TODO: Does not remove the last one because of the regex.
 modelsToFilters.forEach((model) => {
     console.info(`Removing ${model} from generated models`);
-    fileContents = filterModel(fileContents, model, model.toLowerCase() !== 'sduicomponent' && model.toLowerCase() !== 'sduiaction');
+    fileContents = filterModel(fileContents, model, model.toLowerCase() !== 'sduicomponent' && model.toLowerCase() !== 'sduiaction' && model.toLowerCase() !== 'sduiheader');
 });
 
-fileContents += generateComponent(schema);
+// Generate the types that are merged between library and project.
+fileContents += generateCodableEnum('Component', schema, 'ComponentExample');
+fileContents += generateCodableEnum('Header', schema, 'HeaderMain');
+fileContents += generateCodableEnum('Action', schema);
 
 writeFileSync(modelsFilePath, fileContents, 'utf-8');
 

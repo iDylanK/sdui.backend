@@ -6,24 +6,36 @@ const {
     anyOf,
     string,
     compose,
+    constant,
+    nillable,
+    ref,
+    enumerate,
 } = require('openapi-typescript-validator');
 
 const types = {};
 
+types.DisplayMode = enumerate([
+    'AUTOMATIC',
+    'INLINE',
+    'LARGE',
+]);
+
 types.HeaderBase = object({
     id: string(),
     scrollable: boolean(),
+    title: string(),
+    display_mode: nillable(ref('DisplayMode')),
 });
 
-types.HeaderExample = compose(
+types.HeaderMain = compose(
     types.HeaderBase,
     object({
-        content: string(),
+        type: constant('HEADER'),
     }),
 );
 
 types.Header = anyOf([
-    'HeaderExample',
+    'HeaderMain',
 ]);
 
 module.exports.types = types;

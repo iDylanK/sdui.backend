@@ -30,23 +30,10 @@ types.ScreenType = enumerate([
 types.Screen = object({
     id: string(),
     view: nillable(ref('View')),
-    navigation_view: nillable(ref('NavigationView')),
     header: nillable(ref('Header')),
     type: ref('ScreenType'),
     // data: nillable(any()), // TODO: external and somehow in.
 });
-
-types.NavigationView = object({
-    title: string(),
-    display_mode: nillable(ref('DisplayMode')),
-
-});
-
-types.DisplayMode = enumerate([
-    'AUTOMATIC',
-    'INLINE',
-    'LARGE',
-]);
 
 types.Section = object({
     title: nillable(string()),
