@@ -32,13 +32,14 @@ const modelsToFilters = [
 // TODO: Does not remove the last one because of the regex.
 modelsToFilters.forEach((model) => {
     console.info(`Removing ${model} from generated models`);
-    fileContents = filterModel(fileContents, model, model.toLowerCase() !== 'sduicomponent' && model.toLowerCase() !== 'sduiaction' && model.toLowerCase() !== 'sduiheader');
+    fileContents = filterModel(fileContents, model, model.toLowerCase() !== 'sduicomponent' && model.toLowerCase() !== 'sduiaction' && model.toLowerCase() !== 'sduiheader' && model.toLowerCase() !== 'sduiplaceholder');
 });
 
 // Generate the types that are merged between library and project.
-fileContents += generateCodableEnum('Component', schema, 'ComponentExample');
-fileContents += generateCodableEnum('Header', schema, 'HeaderMain');
+fileContents += generateCodableEnum('Component', schema, 'ExampleComponent');
+fileContents += generateCodableEnum('Header', schema, 'MainHeader');
 fileContents += generateCodableEnum('Action', schema);
+fileContents += generateCodableEnum('PlaceHolder', schema, 'ExamplePlaceHolder');
 
 writeFileSync(modelsFilePath, fileContents, 'utf-8');
 

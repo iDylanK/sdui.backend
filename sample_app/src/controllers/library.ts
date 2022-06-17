@@ -93,6 +93,11 @@ const getLibraryScreen = (req: Request, res: Response, next: NextFunction) => re
                                 id: 'action-header-scrollable-screen',
                                 type: 'NAVIGATION_LINK',
                                 url: 'library/header/scrollable',
+                                place_holder: {
+                                    type: 'PRODUCT',
+                                    title: 'Spare Ribs',
+                                    image: 'https://cdn0.iconfinder.com/data/icons/meats-fish/512/Spare_ribs-512.png',
+                                },
                             }),
                         }),
                         component({

@@ -3,7 +3,7 @@ import { readFileSync } from 'fs';
 export function generateCodableEnum(type: string, schema: string, filter: string | null = null) {
     let fileContents = '';
 
-    // TODO: Currently manually removing ComponentExample and HeaderMain.
+    // TODO: Currently manually removing ExampleComponent and HeaderMain.
     //       These values have to be in the schemas or the anyOf won't work.
     // TODO: Action types are all put in from the library here again.. Works.. But not clean.
     let types = JSON.parse(readFileSync(schema, 'utf-8')).definitions[type].anyOf.map((t: any) => t.$ref.replace('#/definitions/', ''));

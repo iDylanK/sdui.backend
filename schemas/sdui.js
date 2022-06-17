@@ -30,7 +30,7 @@ types.ScreenType = enumerate([
 types.Screen = object({
     id: string(),
     content: nillable(ref('Content')),
-    header: nillable(ref('Header')),
+    header: optional(ref('Header')),
     type: ref('ScreenType'),
 });
 

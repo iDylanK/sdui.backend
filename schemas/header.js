@@ -10,6 +10,7 @@ const {
     nillable,
     ref,
     enumerate,
+    optional,
 } = require('openapi-typescript-validator');
 
 const types = {};
@@ -20,23 +21,31 @@ types.DisplayMode = enumerate([
     'LARGE',
 ]);
 
-types.HeaderBase = object({
+types.BaseHeader = object({
     id: string(),
     scrollable: boolean(),
     title: string(),
     display_mode: nillable(ref('DisplayMode')),
-    action: nillable(ref('Action')),
+    action: optional(ref('Action')),
 });
 
-types.HeaderMain = compose(
-    types.HeaderBase,
+types.MainHeader = compose(
+    types.BaseHeader,
     object({
         type: constant('HEADER'),
     }),
 );
 
+types.FilterHeader = compose(
+    types.BaseHeader,
+    object({
+        type: constant('FILTER'),
+    }),
+);
+
 types.Header = anyOf([
-    'HeaderMain',
+    'MainHeader',
+    'FilterHeader',
 ]);
 
 module.exports.types = types;

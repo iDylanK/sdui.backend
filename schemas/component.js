@@ -11,21 +11,21 @@ const {
 
 const types = {};
 
-types.ComponentBase = object({
+types.BaseComponent = object({
     id: string(),
     action: optional(ref('Action')),
     searchable: optional(string()),
 });
 
-types.ComponentExample = compose(
-    types.ComponentBase,
+types.ExampleComponent = compose(
+    types.BaseComponent,
     object({
         content: string(),
     }),
 );
 
 types.Component = anyOf([
-    'ComponentExample',
+    'ExampleComponent',
 ]);
 
 module.exports.types = types;

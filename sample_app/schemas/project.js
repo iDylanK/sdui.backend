@@ -23,8 +23,8 @@ types.PrimaryButton = object({
     action: optional(ref('Action')),
 });
 
-types.ComponentProduct = compose(
-    types.ComponentBase,
+types.ProductComponent = compose(
+    types.BaseComponent,
     object({
         type: constant('PRODUCT'),
         product: ref('Product'),
@@ -32,8 +32,8 @@ types.ComponentProduct = compose(
     }),
 );
 
-types.HeaderProduct = compose(
-    types.HeaderBase,
+types.ProductHeader = compose(
+    types.BaseHeader,
     object({
         type: constant('PRODUCT'),
         product: ref('Product'),
@@ -56,10 +56,18 @@ types.ProductBuy = compose(
     }),
 );
 
-types.Component = anyOf([...types.Component.anyOf, 'ComponentProduct']);
+types.ProductPlaceHolder = object({
+    type: constant('PRODUCT'),
+    title: string(),
+    image: string(),
+});
 
-types.Header = anyOf([...types.Header.anyOf, 'HeaderProduct']);
+types.Component = anyOf([...types.Component.anyOf, 'ProductComponent']);
+
+types.Header = anyOf([...types.Header.anyOf, 'ProductHeader']);
 
 types.Action = anyOf([...types.Action.anyOf, 'ProductBuy']);
+
+types.PlaceHolder = anyOf([...types.PlaceHolder.anyOf, 'ProductPlaceHolder']);
 
 module.exports.types = types;

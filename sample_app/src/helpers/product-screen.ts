@@ -9,7 +9,7 @@ import {
 import { Screen, ScreenType, Header, Product } from '../../generated/models';
 import * as products from './products';
 
-function productHeader(product: () => Product, headerScrollable = false): Header {
+export function productHeader(product: () => Product, headerScrollable = false): Header {
     return {
         id: '0',
         scrollable: headerScrollable,
@@ -28,14 +28,14 @@ function productHeader(product: () => Product, headerScrollable = false): Header
     };
 }
 
-export default function getProductScreen(
+export function getProductScreen(
     type: ScreenType,
-    header: (() => Product) | null = null,
-    headerScrollable = false,
+    header: Header | null = null,
 ): Screen {
     return {
         id: 'screen-id-product',
         type,
+        ...(header ? { header } : {}),
         content: content({
             refreshable: true,
             scrollable: false,
@@ -92,6 +92,5 @@ export default function getProductScreen(
                 }),
             ],
         }),
-        ...(header ? { header: productHeader(header, headerScrollable) } : {}),
     };
 }

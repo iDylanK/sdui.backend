@@ -61,9 +61,14 @@ types.NavigationLink = compose(
 //     'PRODUCT',
 // ]);
 
-types.PlaceHolder = object({
+types.ExamplePlaceHolder = object({
+    type: constant('EXAMPLE'),
     title: string(),
     image: string(),
 });
+
+types.PlaceHolder = anyOf([
+    'ExamplePlaceHolder',
+]);
 
 module.exports.types = types;
