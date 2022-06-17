@@ -24,15 +24,14 @@ types.Color = enumerate([
 
 types.ScreenType = enumerate([
     'LIST',
-    'VIEWS',
+    'CONTENT_VIEW',
 ]);
 
 types.Screen = object({
     id: string(),
-    view: nillable(ref('View')),
+    content: nillable(ref('Content')),
     header: nillable(ref('Header')),
     type: ref('ScreenType'),
-    // data: nillable(any()), // TODO: external and somehow in.
 });
 
 types.Section = object({
@@ -40,10 +39,11 @@ types.Section = object({
     components: optional(array(ref('Component'))),
 });
 
-types.View = object({
+types.Content = object({
     sections: nillable(array(ref('Section'))),
     scrollable: boolean(),
     refreshable: boolean(),
+    searchable: optional(boolean()),
 });
 
 module.exports = {

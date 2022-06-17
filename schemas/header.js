@@ -25,6 +25,7 @@ types.HeaderBase = object({
     scrollable: boolean(),
     title: string(),
     display_mode: nillable(ref('DisplayMode')),
+    action: nillable(ref('Action')),
 });
 
 types.HeaderMain = compose(

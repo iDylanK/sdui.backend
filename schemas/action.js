@@ -16,6 +16,7 @@ types.Action = anyOf([
     'Sheet',
     'Alert',
     'NavigationLink',
+    'Share',
 ]);
 
 types.ActionBase = object({
@@ -36,6 +37,14 @@ types.Sheet = compose(
     types.ActionBase,
     object({
         type: constant('SHEET'),
+        url: string(),
+    }),
+);
+
+types.Share = compose(
+    types.ActionBase,
+    object({
+        type: constant('SHARE'),
         url: string(),
     }),
 );

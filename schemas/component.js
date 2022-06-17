@@ -14,6 +14,7 @@ const types = {};
 types.ComponentBase = object({
     id: string(),
     action: optional(ref('Action')),
+    searchable: optional(string()),
 });
 
 types.ComponentExample = compose(
