@@ -11,19 +11,17 @@ const {
     enumerate,
 } = require('openapi-typescript-validator');
 
-/**
- * Components
- */
-
-// Load SDUI frameowork
+// Load SDUI framework
 const { types } = require('../../schemas/sdui');
+
+/** Views */
 
 types.PrimaryButton = object({
     title: string(),
     action: optional(ref('Action')),
 });
 
-types.ProductCategory = enumerate(['DRINK', 'FOOD', 'LIBRARY']);
+/** Components */
 
 types.ProductComponent = compose(
     types.BaseComponent,
@@ -33,6 +31,8 @@ types.ProductComponent = compose(
         primary_button: optional(ref('PrimaryButton')),
     }),
 );
+
+/** Headers */
 
 types.ProductHeader = compose(
     types.BaseHeader,
@@ -50,12 +50,7 @@ types.FilterHeader = compose(
     }),
 );
 
-types.Product = object({
-    id: string(),
-    content: string(),
-    image: string(),
-    category: ref('ProductCategory'),
-});
+/** Actions */
 
 types.ProductBuy = compose(
     types.ActionBase,
@@ -66,10 +61,23 @@ types.ProductBuy = compose(
     }),
 );
 
+/** PlaceHolders */
+
 types.ProductPlaceHolder = object({
     type: constant('PRODUCT'),
     title: string(),
     image: string(),
+});
+
+/** Product */
+
+types.ProductCategory = enumerate(['DRINK', 'FOOD', 'LIBRARY']);
+
+types.Product = object({
+    id: string(),
+    content: string(),
+    image: string(),
+    category: ref('ProductCategory'),
 });
 
 types.Component = anyOf([...types.Component.anyOf, 'ProductComponent']);
