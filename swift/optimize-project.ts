@@ -36,7 +36,7 @@ modelsToFilters.forEach((model) => {
 });
 
 // Generate the types that are merged between library and project.
-fileContents += generateCodableEnum('Component', schema, 'ExampleComponent');
+fileContents += generateCodableEnum('Component', schema, 'BasicComponent');
 fileContents += generateCodableEnum('Header', schema, 'MainHeader');
 fileContents += generateCodableEnum('Action', schema);
 fileContents += generateCodableEnum('PlaceHolder', schema, 'ExamplePlaceHolder');

@@ -10,7 +10,7 @@ const getContentScreen = (req: Request, res: Response, next: NextFunction) => re
 const getListScreen = (req: Request, res: Response, next: NextFunction) => res.status(200).json(
     getProductScreen('LIST', {
         id: 'header-filter',
-        title: 'Test',
+        title: 'Products',
         type: 'FILTER',
         scrollable: false,
     }),

@@ -36,16 +36,8 @@ types.MainHeader = compose(
     }),
 );
 
-types.FilterHeader = compose(
-    types.BaseHeader,
-    object({
-        type: constant('FILTER'),
-    }),
-);
-
 types.Header = anyOf([
     'MainHeader',
-    'FilterHeader',
 ]);
 
 module.exports.types = types;

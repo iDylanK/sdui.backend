@@ -25,6 +25,8 @@ const modelsToFilters = [
     'SDUIPlaceHolder',
 ];
 
+fileContents = fileContents.replace(/^public struct SDUIComponent:/gms, 'public struct SDUIBasicComponent:');
+
 // remove certain models
 modelsToFilters.forEach((model) => {
     console.info(`Removing ${model} from generated models`);

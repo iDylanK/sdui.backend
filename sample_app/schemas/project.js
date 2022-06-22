@@ -7,8 +7,8 @@ const {
     anyOf,
     string,
     compose,
-    nillable,
     optional,
+    enumerate,
 } = require('openapi-typescript-validator');
 
 /**
@@ -22,6 +22,8 @@ types.PrimaryButton = object({
     title: string(),
     action: optional(ref('Action')),
 });
+
+types.ProductCategory = enumerate(['DRINK', 'FOOD', 'LIBRARY']);
 
 types.ProductComponent = compose(
     types.BaseComponent,
@@ -41,10 +43,18 @@ types.ProductHeader = compose(
     }),
 );
 
+types.FilterHeader = compose(
+    types.BaseHeader,
+    object({
+        type: constant('FILTER'),
+    }),
+);
+
 types.Product = object({
     id: string(),
     content: string(),
     image: string(),
+    category: ref('ProductCategory'),
 });
 
 types.ProductBuy = compose(
@@ -64,7 +74,7 @@ types.ProductPlaceHolder = object({
 
 types.Component = anyOf([...types.Component.anyOf, 'ProductComponent']);
 
-types.Header = anyOf([...types.Header.anyOf, 'ProductHeader']);
+types.Header = anyOf([...types.Header.anyOf, 'ProductHeader', 'FilterHeader']);
 
 types.Action = anyOf([...types.Action.anyOf, 'ProductBuy']);
 

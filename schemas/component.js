@@ -7,6 +7,7 @@ const {
     string,
     compose,
     ref,
+    constant,
 } = require('openapi-typescript-validator');
 
 const types = {};
@@ -17,15 +18,16 @@ types.BaseComponent = object({
     searchable: optional(string()),
 });
 
-types.ExampleComponent = compose(
+types.BasicComponent = compose(
     types.BaseComponent,
     object({
+        type: constant('BASIC'),
         content: string(),
     }),
 );
 
 types.Component = anyOf([
-    'ExampleComponent',
+    'BasicComponent',
 ]);
 
 module.exports.types = types;
