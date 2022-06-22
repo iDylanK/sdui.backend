@@ -41,8 +41,8 @@ types.Section = object({
 
 types.Content = object({
     sections: nillable(array(ref('Section'))),
-    scrollable: boolean(),
-    refreshable: boolean(),
+    scrollable: nillable(boolean()),
+    refreshable: nillable(boolean()),
     searchable: optional(boolean()),
 });
 
