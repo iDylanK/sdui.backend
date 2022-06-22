@@ -24,7 +24,7 @@
     "build": "tsc",
     "postbuild": "cp .prettierrc dist/.prettierrc && cp generated/schema.json dist/generated/schema.json",
     "library:schema": "ts-node lib/library",
-    "library:swift": "npm run library:schema && quicktype -s schema generated/schema.json -o $npm_config_sdui_dir/Sources/SDUI/Domain/SDUIModels.swift --coding-keys --no-initializers --type-prefix SDUI --access-level public --density normal --protocol hashable --acronym-style camel -t Schema --struct-or-class struct --swift-5-support",
+    "library:swift": "npm run library:schema && quicktype -s schema generated/schema.json -o $npm_config_sdui_dir/Sources/SDUI/Domain/SDUIModels.swift --coding-keys --no-initializers --type-prefix SDUI --access-level public --density normal --protocol hashable --acronym-style camel -t Schema --struct-or-class struct --swift-5-support --mutable-properties",
     "postlibrary:swift": "ts-node swift/optimize-library.ts $npm_config_sdui_dir/Sources/SDUI/Domain/SDUIModels.swift"
   },
   "bin": {
