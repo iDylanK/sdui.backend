@@ -59,11 +59,12 @@ This package contains an sdui command to help generate a json api schema, typesc
 ### Typescript types
 
 Buidling typescript models:
-`sdui schema <javascript_schema_file> <output_directory>`
-This outputs a json schema file and the corresponding typescript types.
+`sdui schema <your_project.js> <generated_output_directory>`
+This outputs a json schema file and the corresponding typescript types to be used within your API.
 
 ## Generating Swift models
-...
+To generate the corresponding swift models run:
+`sdui swift <generated_output_directory/schema.json <sduiValidation_directory/Shared/Domain/ValidationModels.swift>`
 
 ## Search:
 - Only local search is possible for now. Add a searchable string to a component. Can contain more keywords like this too.
