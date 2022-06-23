@@ -1,3 +1,5 @@
+# SDUI Typescript generator
+
 - [SDUI Typescript generator](#sdui-typescript-generator)
   - [Getting started](#getting-started)
     - [Installation](#installation)
@@ -10,8 +12,6 @@
   - [Search:](#search)
   - [Share](#share)
   - [Contributing](#contributing)
-
-# SDUI Typescript generator
 
 ## Getting started
 
