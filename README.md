@@ -1,3 +1,16 @@
+- [SDUI Typescript generator](#sdui-typescript-generator)
+  - [Getting started](#getting-started)
+    - [Installation](#installation)
+  - [Defining schemas](#defining-schemas)
+    - [Adding Components, Actions, Headers and PlaceHolders](#adding-components-actions-headers-and-placeholders)
+  - [Generation](#generation)
+    - [Typescript types](#typescript-types)
+  - [Generating Swift models](#generating-swift-models)
+  - [Default types](#default-types)
+  - [Search:](#search)
+  - [Share](#share)
+  - [Contributing](#contributing)
+
 # SDUI Typescript generator
 
 ## Getting started
@@ -70,6 +83,9 @@ To generate the corresponding swift models run:
 
 `sdui swift <generated_output_directory/schema.json <sduiValidation_directory/Shared/Domain/ValidationModels.swift>`
 
+## Default types
+They can be found in the documentation [here](https://github.com/iDylanK/sdui.backend/wiki/SDUI-Types).
+
 ## Search:
 - Only local search is possible for now. Add a searchable string to a component. Can contain more keywords like this too.
 - TODO: search via delegate.
@@ -80,5 +96,5 @@ To generate the corresponding swift models run:
 - TODO: sharing images. expand the delegate to support this.
 
 ## Contributing
-The SDUI Swift Library needs to be installed (see XX).
+The SDUI Swift Library needs to be installed (see [this](https://github.com/iDylanK/sdui.ios)).
 Copy .nmprc.example to .npmrc and specify the SDUI Swift Library location.
